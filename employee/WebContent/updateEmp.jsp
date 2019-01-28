@@ -11,26 +11,16 @@
 <link href="css/canvas.css" rel="stylesheet">
 </head>
 <body onload="startTime()">
-<canvas id="canvas"></canvas>
-	<center>
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">演示系统</a>
-				</div>
-				<div>
-					<p class="navbar-text">员工列表</p>
-				</div>
-				  <p class="navbar-text navbar-right" id="txt"></p>
-		    <p class="navbar-text navbar-right">Time:
-		    <%
-					Date date = new Date();
-					SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
-					out.println(fmt.format(date));
-			%>
-			</p>
-			</div>
+	<canvas id="canvas"></canvas>
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+			<a class="navbar-brand" href="#">演示系统</a>
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="#">修改信息</a></li>
+				<li class="nav-item"><a class="nav-link" href="#" id="txt"></a>
+				</li>
+			</ul>
 		</nav>
+	<center>
 		<div class="container">
 			<div class="jumbotron">
 				<h1 style="font-size: 40px">员工管理系统</h1>
@@ -61,7 +51,6 @@
 					<td valign="middle" align="right">年龄:</td>
 					<td valign="middle" align="left"><input type="text" name="age"
 						class="form-control" placeholder="Realname" value="${e.age}">
-						<%-- 					<input type="text" class="inputgri" name="age" value="${e.age}" /></td> --%>
 				</tr>
 			</table>
 			<p>
@@ -69,7 +58,7 @@
 			</p>
 		</form>
 	</center>
-	    <script type="text/javascript" src="js/time.js"></script>
+	<script type="text/javascript" src="js/time.js"></script>
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script type="text/javascript" src="js/canvas.js"></script>
 </body>

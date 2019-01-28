@@ -13,24 +13,13 @@
 </head>
 <body onload="startTime()">
 	<canvas id="canvas"></canvas>
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">演示系统</a>
-			</div>
-			<div>
-				<p class="navbar-text">用户注册</p>
-			</div>
-			<p class="navbar-text navbar-right" id="txt"></p>
-			<p class="navbar-text navbar-right">
-				Time:
-				<%
-				Date date = new Date();
-				SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
-				out.println(fmt.format(date));
-			%>
-			</p>
-		</div>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+		<a class="navbar-brand" href="#">演示系统</a>
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="#">用户注册</a></li>
+			<li class="nav-item"><a class="nav-link" href="#" id="txt"></a>
+			</li>
+		</ul>
 	</nav>
 	<div style="height: 60px"></div>
 	<div class="container">

@@ -14,26 +14,16 @@
 </head>
 <body onload="startTime()">
 	<canvas id="canvas"></canvas>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+		<a class="navbar-brand" href="#">演示系统</a>
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="#">员工列表</a></li>
+			<li class="nav-item" >
+			<a class="nav-link" href="#" id="txt"></a>
+			</li>
+		</ul>
+	</nav>
 	<center>
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">演示系统</a>
-				</div>
-				<div>
-					<p class="navbar-text">员工列表</p>
-				</div>
-				<p class="navbar-text navbar-right" id="txt"></p>
-				<p class="navbar-text navbar-right">
-					Time:
-					<%
-					Date date = new Date();
-					SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
-					out.println(fmt.format(date));
-				%>
-				</p>
-			</div>
-		</nav>
 		<div class="container">
 			<div class="jumbotron">
 				<h1 style="font-size: 40px">员工管理系统</h1>
