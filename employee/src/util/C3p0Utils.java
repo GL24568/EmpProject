@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class C3p0Utils {
@@ -16,6 +18,10 @@ public class C3p0Utils {
 
 	}
 
+	public static DataSource getDataSource() {
+		return dataSource;
+	}
+	
 	public static void close(PreparedStatement pst, Connection conn) {
 		if (pst != null) {
 			try {

@@ -3,7 +3,12 @@ package dao.imp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import dao.UserDAO;
 import entity.User;
@@ -12,112 +17,58 @@ import util.C3p0Utils;
 public class UserDAOImpl implements UserDAO {
 
 	public void addUser(User user) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-
+		QueryRunner queryRunner = new QueryRunner(C3p0Utils.getDataSource());
+		String sql = "insert into t_user(username,name,password,gender) values(?,?,?,?)";
 		try {
-			conn = C3p0Utils.getConnection();
-			ps = conn.prepareStatement("insert into t_user(username,name,password,gender) values(?,?,?,?)");
-			ps.setString(1, user.getUsername());
-			ps.setString(2, user.getName());
-			ps.setString(3, user.getPassword());
-			ps.setString(4, user.getGender());
-			ps.executeUpdate();
-
-		} catch (Exception e) {
+			int update = queryRunner.update(sql, user.getUsername(),user.getName(),user.getPassword(),user.getGender());
+			System.out.println("增加" + update + "名用户");
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			C3p0Utils.close(ps, conn);
 		}
 	}
 
-	public void deleteUserByID(int ID) {
-		Connection conn = null;
-		PreparedStatement ps = null;
+	public void deleteUserByID(int id) {
+		QueryRunner queryRunner = new QueryRunner(C3p0Utils.getDataSource());
+		String sql = "delete from t_user where id=?";
 		try {
-			conn = C3p0Utils.getConnection();
-			ps = conn.prepareStatement("delete from t_user where id=?");
-			ps.setInt(1, ID);
-
-		} catch (Exception e) {
+			int update = queryRunner.update(sql, id);
+			System.out.println("删除" + update + "名用户");
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			C3p0Utils.close(ps, conn);
 		}
 	}
 
 	public void updateUser(User user) {
-		Connection conn = null;
-		PreparedStatement ps = null;
+		QueryRunner queryRunner = new QueryRunner(C3p0Utils.getDataSource());
+		String sql = "update t_user set username=?,name=?,password=?,gender=? where id=?";
 		try {
-			conn = C3p0Utils.getConnection();
-			ps = conn.prepareStatement("update t_user set username=?,name=?,password=?,gender=? where id=?");
-			ps.setString(1, user.getUsername());
-			ps.setString(2, user.getName());
-			ps.setString(3, user.getPassword());
-			ps.setString(4, user.getGender());
-			ps.setInt(5, user.getId());
-			ps.executeUpdate();
-
-		} catch (Exception e) {
+			int update = queryRunner.update(sql, user.getUsername(),user.getName(),user.getPassword(),user.getGender());
+			System.out.println("更新了" + update + "名用户");
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			C3p0Utils.close(ps, conn);
 		}
 	}
-
 
 	public ArrayList<User> findAllUsers() {
 		ArrayList<User> userlist = new ArrayList<User>();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
+		QueryRunner queryRunner = new QueryRunner(C3p0Utils.getDataSource());
+		String sql = "select * from t_user";
 		try {
-			conn = C3p0Utils.getConnection();
-			ps = conn.prepareStatement("select * from t_user");
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("username"));
-				user.setName(rs.getString("name"));
-				user.setPassword(rs.getString("password"));
-				user.setGender(rs.getString("gender"));
-				userlist.add(user);
-			}
-		} catch (Exception e) {
+			userlist = (ArrayList<User>) queryRunner.query(sql, new BeanListHandler<User>(User.class));
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			C3p0Utils.close(rs, ps, conn);
 		}
 		return userlist;
 	}
-
+	
 	public User findUserByUsername(String username) {
 		User user = null;
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
+		QueryRunner queryRunner = new QueryRunner(C3p0Utils.getDataSource());
+		String sql = "select * from t_user where username=?";
 		try {
-			conn = C3p0Utils.getConnection();
-			ps = conn.prepareStatement("select * from t_user where username=?");
-			ps.setString(1, username);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("password"));
-				user.setName(rs.getString("name"));
-				user.setGender(rs.getString("gender"));
-			}
-
-		} catch (Exception e) {
+			user = (User) queryRunner.query(sql,new BeanHandler<User>(User.class),username);
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			C3p0Utils.close(rs, ps, conn);
 		}
 		return user;
 	}
